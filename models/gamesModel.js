@@ -1,6 +1,6 @@
-const mongoose = required("mongoose");
+const mongoose = require("mongoose");
 
-const gamesSchema = new mongoose.gamesSchema({
+const gamesSchema = new mongoose.Schema({
     title : {type: String, required: true, unique: true},
     editor: {type: String, required: true},
     edition : {type: String, required: true},

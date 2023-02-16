@@ -10,20 +10,15 @@ const coordsSchema = new mongoose.Schema({
 // Create sub-Schema for players who registered to play this session
 const PlayersSchema = new mongoose.Schema ({
     nickName:{ type: String, required : true},
-    userId : {
-    type: ObecjtId,
-    ref: 'User',
-    required: true}
+    userId : mongoose.Schema.Types.ObjectId,
+   
 })   
 
 // Create sub-Schema for session OWNER
 const OwnerSchema = new mongoose.Schema({
     nickname : {type : String,
     required : true},
-    userId :  {
-        type: ObecjtId,
-        ref: 'User',
-        required: true}
+    userId : mongoose.Schema.Types.ObjectId,
 });
 
 // Create main Session Schema
@@ -45,7 +40,7 @@ const SessionSchema = new mongoose.Schema({
     physicalLocation : coordsSchema, // GPS coord.
     onlineLocation : String, // which software
     registeredUsers: [PlayersSchema],
-    status: String, // open, closed, finished.
+    sessionStatus: String, // open, closed, finished.
     likes: [], /// TODO 
     posts: postsSchema // 
 });

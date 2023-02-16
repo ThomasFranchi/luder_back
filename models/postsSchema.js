@@ -4,21 +4,23 @@ const mongoose = require('mongoose');
 
 // Create sub-Schema for Comments
 const CommentsSchema = new mongoose.Schema({
-author : String,
-authorId: ObjectId,
-publicationDate : Date,
-content: String,
-commentLikes : [] // TODO
+commentAuthor : String,
+commentAuthorId: mongoose.Schema.Types.ObjectId,
+commentPublicationDate : Date,
+commentContent: String,
+commentCommentLikes : [] // TODO
 })
 
 // Create Session Schema
-const PostSchema = new mongoose.SChema({
-    author: String,
-    authorId: ObjectId,
-    publicationDate : Date,
-    content: String,
+const PostSchema = new mongoose.Schema({
+    postAuthor: String,
+    postAuthorId: mongoose.Schema.Types.ObjectId,
+    postPublicationDate : Date,
+    postContent: String,
     postLikes: [],// TODO
-    comment: [CommentsSchema]
+    PostComments: [CommentsSchema]
 });
 
 module.exports = PostSchema;
+
+
