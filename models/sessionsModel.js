@@ -36,7 +36,7 @@ const SessionSchema = new mongoose.Schema({
     availableSpots: Number,
     onLine : Boolean,
     local: Boolean,
-    mixed: Boolean,
+    // mixed: Boolean,
     physicalLocation : coordsSchema, // GPS coord.
     onlineLocation : String, // which software
     registeredUsers: [PlayersSchema],
