@@ -1,9 +1,7 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const gamesModel = require("../models/gamesModel");
 
 const gamesController = {
-
-
   //
   // New method to GET list of games
   //
@@ -27,7 +25,6 @@ const gamesController = {
       } else {
         // Renvoi de la data trouvée dans la BDD
         res.json(data);
-        console.log(data);
       }
     });
   },
@@ -92,25 +89,21 @@ const gamesController = {
     }
 
     game.save((err, data) => {
-      console.log(err)
+      console.log(err);
       if (err !== null && err.code == 11000) {
-        res
-          .status(422)
-          .json({
-            sucess: false,
-            message:
-              "Ce jeu existe déjà dans la liste, vous ne pouvez pas l'ajouter une nouvelle fois.",
-          });
+        res.status(422).json({
+          sucess: false,
+          message:
+            "Ce jeu existe déjà dans la liste, vous ne pouvez pas l'ajouter une nouvelle fois.",
+        });
         return;
-
       } else if (err) {
         // console.log(Object.keys(err.keyPattern)[0])
         res
           .status(422)
           .json({ success: false, message: "Le jeu n'a pas pu être ajouté" });
- 
-        return;
 
+        return;
       } else {
         res.json({ success: true, message: "Jeu ajouté" });
         // return;
@@ -122,48 +115,40 @@ const gamesController = {
   // GET game Info from ID
   //
 
-  getGameId: (req,res) => {
-
+  getGameId: (req, res) => {
     const id = req.params.gameId;
-    gamesModel.findOne({ _id: id}, (err, data) => {
+    gamesModel.findOne({ _id: id }, (err, data) => {
       if (err) {
-        console.log("GAME",err)
         res.status(404).json({ message: "Erreur" });
       } else {
         // Renvoi de la data trouvée dans la BDD
         res.json(data);
-
       }
     });
-    },
+  },
 
   //
-  // DELETE game  
+  // DELETE game
   //
 
-  deleteGameId: (req,res) => {
-
+  deleteGameId: (req, res) => {
     const id = req.params.gameid;
-   gamesModel.deleteOne({ _id: id}, (err, data) => {
-    
+    gamesModel.deleteOne({ _id: id }, (err, data) => {
       if (err) {
         console.log(err);
         res.status(404).json({ message: "Erreur" });
       } else {
         // Renvoi de la data trouvée dans la BDD
         res.json(data);
-        console.log("DATA",data);
       }
     });
-    },
-
+  },
 
   //
-  // PUT game  
+  // PUT game
   //
 
-  putGameId: (req,res) => {
-
+  putGameId: (req, res) => {
     const {
       title,
       editor,
@@ -188,22 +173,33 @@ const gamesController = {
       averageDuration,
     });
 
-
     const _id = req.params.gameId;
 
-  gamesModel.findByIdAndUpdate({id: req.params.gameId},  game, (err, game) => {
-
-      if (err) {
-        console.log("ERRE",err);
-        res.status(404).json({ message: "Erreur" });
-      } else {
-        // Renvoi de la data trouvée dans la BDD
-        res.json(game);
-        console.log("DATA",game);
+    gamesModel.updateOne(
+      { id: req.params.gameId },
+      {
+        title,
+        editor,
+        edition,
+        releaseDate,
+        language,
+        minPlayers,
+        maxPlayers,
+        minRecommendedAge,
+        averageDuration,
+      },
+      (err, game) => {
+        console.log("REQPARAMS", req.params);
+        if (err) {
+          console.log("ERRE", err);
+          res.status(404).json({ message: "Erreur" });
+        } else {
+          // Renvoi de la data trouvée dans la BDD
+          res.json({ message: "jeux modifié", game });
+        }
       }
-    });
-    },
-
+    );
+  },
 };
 
 module.exports = gamesController;

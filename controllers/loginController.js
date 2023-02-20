@@ -18,45 +18,53 @@ const loginController = {
       return;
     }
 
-    // POSTlogin info to compare to DB
-    usersModel.findOne({ email: email }, async (err, data) => {
+    // POST login info to compare to DB
+    usersModel.findOne({ email: email }, 'password nickName', async (err, data) => {
 
-      
-      // compare password
-      
-      const match = await bcrypt.compare(password, data.password);
-
-      if (match === false ) {
-       res.json({
-          success: false,
-          message: "Email ou mot de passe incorrect",
-        });
-        return;
-      } else {
-        // Generate Json Web Token
-        const token = jwt.sign(
-          {
-            userId: data._id,
-          },
-          "secretmessagetrestressecret",
-          { expiresIn: "24h" }
-        );
-        res.json({
-          success: true,
-          message: "Vous êtes connecté !",
-          token: token
-        });
-
-      }
+      // Erreur
       if (err) {
         // console.log(Object.keys(err.keyPattern)[0])
         res
           .status(422)
           .json({ message: "Votre tentative de connexion a échoué." });
         return;
-      } else {
-        //return;
       }
+
+      if(!data) {
+        res.json({
+          success: false,
+          message: "Email ou mot de passe incorrect",
+        });
+        return;
+      }
+
+      
+      // compare password
+      const match = await bcrypt.compare(password, data.password);
+      
+      if (match === false) {
+       res.json({
+          success: false,
+          message: "Email ou mot de passe incorrect",
+        });
+        return;
+      }
+
+      // Generate Json Web Token
+      const token = jwt.sign(
+        {
+          userId: data._id,
+        },
+        "secretmessagetrestressecret",
+        { expiresIn: "24h" }
+      );
+
+      res.json({
+        success: true,
+        message: "Vous êtes connecté !",
+        token: token,
+        user: {nickName: data.nickName} // Return only selected elements
+      });
     });
   },
 };

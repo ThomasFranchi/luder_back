@@ -1,7 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
-const cors = require("./middleware/cors")
-const userInfo = require("./middleware/userInfo")
+const cors = require("./middleware/cors");
+const authCheck = require("./middleware/authCheck");
 
 const registerRouter = require("./routes/registerRoutes");
 const loginRouter = require("./routes/loginRoutes");
@@ -19,10 +19,10 @@ app.use(cors);
 
 app.use('/login', loginRouter )
 app.use('/register', registerRouter);
-// app.use(userInfo);
-app.use('/players', playersRouter)
-app.use('/games', gamesRouter );
-app.use("/sessions", sessionRouter)
+
+app.use('/players', authCheck, playersRouter)
+app.use('/games', authCheck, gamesRouter);
+app.use("/sessions", authCheck, sessionRouter)
 
 
 module.exports = app;

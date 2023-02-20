@@ -5,6 +5,7 @@ const playersController = require("../controllers/playersController")
 
 
 router.get("/", playersController.getPlayersList)
+router.get("/me",playersController.getPlayerMe);
 
 router.get("/:playerId", playersController.getPlayerId)
 router.put("/:playerId", playersController.putPlayerId)

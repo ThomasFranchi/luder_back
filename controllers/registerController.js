@@ -16,21 +16,20 @@ const  registerController = {
 
 
     // encrypt password
-    const hashedpassword =  await bcrypt.hash(password, 10, (err, hash) => {
-      console.log(hash)  
-      return hash;
-    });
+    const hashedpassword = await bcrypt.hash(password, 10);
 
     // Use registerModel 
 
-const newUser = new usersModel({
+    const newUser = new usersModel({
       firstName,
       lastName,
       email,
-      "password": hashedpassword,
+      password: hashedpassword,
       nickName,
       age,
     });
+
+    console.log(newUser);
 
     // Check if input required input are filled 
 

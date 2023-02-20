@@ -17,14 +17,13 @@ const playersController = {
       } else {
         // Renvoi de la data trouvée dans la BDD
         res.json(data);
-        console.log(data);
       }
     });
   },
 
 
   //
-  // GET game Info from ID
+  // GET PLAYER Info from ID
   //
 
   getPlayerId: (req,res) => {
@@ -32,7 +31,7 @@ const playersController = {
     const id = req.params.playerId;
     usersModel.findOne({ _id: id}, (err, data) => {
       if (err) {
-        console.log("PLAYER",err)
+        console.log(err)
         res.status(404).json({ message: "Erreur" });
       } else {
         // Renvoi de la data trouvée dans la BDD
@@ -42,8 +41,17 @@ const playersController = {
     });
     },
 
+      //
+  // GET PLAYER Info from ID
   //
-  // DELETE game  
+
+  getPlayerMe: (req,res) => {
+        res.json(req.user)
+      },
+    
+
+  //
+  // DELETE PLAYER  
   //
 
   deletePlayerId: (req,res) => {
@@ -57,7 +65,6 @@ const playersController = {
       } else {
         // Renvoi de la data trouvée dans la BDD
         res.json(data);
-        console.log("DATA",data);
       }
     });
     },
@@ -99,12 +106,11 @@ const playersController = {
   usersModel.findByIdAndUpdate({id: req.params.gameId},  game, (err, game) => {
 
       if (err) {
-        console.log("ERRE",err);
+        console.log(err);
         res.status(404).json({ message: "Erreur" });
       } else {
         // Renvoi de la data trouvée dans la BDD
         res.json(game);
-        console.log("DATA",game);
       }
     });
     },
