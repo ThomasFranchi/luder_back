@@ -48,7 +48,7 @@ const playersController = {
 
   deletePlayerId: (req,res) => {
 
-    const id = req.params.gameid;
+    const id = req.params.playerId;
    usersModel.deleteOne({ _id: id}, (err, data) => {
     
       if (err) {
