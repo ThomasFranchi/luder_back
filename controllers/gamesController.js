@@ -161,17 +161,17 @@ const gamesController = {
       averageDuration,
     } = req.body;
 
-    const game = new gamesModel({
-      title,
-      editor,
-      edition,
-      releaseDate,
-      language,
-      minPlayers,
-      maxPlayers,
-      minRecommendedAge,
-      averageDuration,
-    });
+    // const game = new gamesModel({
+    //   title,
+    //   editor,
+    //   edition,
+    //   releaseDate,
+    //   language,
+    //   minPlayers,
+    //   maxPlayers,
+    //   minRecommendedAge,
+    //   averageDuration,
+    // });
 
     const _id = req.params.gameId;
 
@@ -189,13 +189,12 @@ const gamesController = {
         averageDuration,
       },
       (err, game) => {
-        console.log("REQPARAMS", req.params);
         if (err) {
           console.log("ERRE", err);
           res.status(404).json({ message: "Erreur" });
         } else {
           // Renvoi de la data trouvée dans la BDD
-          res.json({ message: "jeux modifié", game });
+          res.json({ message: "jeu modifié" });
         }
       }
     );

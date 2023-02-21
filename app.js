@@ -17,12 +17,12 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(cors);
 
-app.use('/login', loginRouter )
+app.use('/login', loginRouter );
 app.use('/register', registerRouter);
 
-app.use('/players', authCheck, playersRouter)
+app.use('/players', authCheck, playersRouter);
 app.use('/games', authCheck, gamesRouter);
-app.use("/sessions", authCheck, sessionRouter)
+app.use("/sessions", authCheck, sessionRouter);
 
 
 module.exports = app;

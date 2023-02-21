@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 
 const gamesSchema = new mongoose.Schema({
     title : { type: String, required: true },
-    // gameId : {type: ObjectId(), required: true }
+    gameId : {type: mongoose.Schema.Types.ObjectId, required: true }
 });
 
 
